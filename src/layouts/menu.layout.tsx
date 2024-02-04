@@ -1,4 +1,4 @@
-import moduleStyle from "../pages/menu-index.module.scss";
+import moduleStyle from "./menu-layout.module.scss";
 const MenuLayout = (props: any) => {
   return (
     <div className={moduleStyle.categoryWrap}>

@@ -1,33 +1,140 @@
-.main {
-  display: flex;
-}
-.cardSection {
-  padding-right: 16px;
-}
-
-.categoryWrap {
-  max-width: 159px;
-  margin: 56px;
-  .inner {
-    border-radius: 30px;
-    background: #fff;
-    box-shadow: 4px 4px 30px 0px rgba(0, 0, 0, 0.1), -4px -4px 10px 0px rgba(246, 246, 246, 0.5);
-  }
-}
-.searchWrap {
+@mixin spaceBetween {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+}
+
+.main {
+  display: flex;
+  width: var(--content-width);
+  margin: 0 auto;
   margin-top: 57px;
 }
-.cardWrap {
+
+.menuSection {
+  width: var(--side-width);
+  flex-shrink: 0;
+}
+
+.cardSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex: 1;
   height: 100vh;
-  margin-top: 56px;
-  overflow: scroll;
+}
+
+// header search bar
+.searchWrap {
+  @include spaceBetween;
+  gap: 46px;
+  width: calc(var(--content-width) - var(--side-width));
+  padding: 10px 16px;
+  padding-top: 0;
+  position: fixed;
+  > div {
+    &.textField {
+      flex: 2;
+      > div {
+        padding: 28px;
+        height: 83;
+        box-sizing: border-box;
+        border-radius: 30px;
+        background: #dadada;
+        input {
+          padding: 0;
+        }
+      }
+    }
+
+    // @media screen {
+    //   &.orderBell {
+    //     .bell-image {
+    //       --bell-size: 24px;
+    //     }
+    //   }
+    // }
+
+    &.orderBell {
+      @include spaceBetween;
+
+      .bellImage {
+        --bell-size: 48px;
+        width: var(--bell-size);
+        height: var(--bell-size);
+        position: relative;
+        margin-right: 10px;
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 106px;
+          height: 106px;
+          border-radius: 100%;
+          background-color: #ac8f64;
+          z-index: -1;
+        }
+
+        img {
+          width: 100%;
+        }
+      }
+
+      .bellText {
+        font-size: 20px;
+        margin-right: 31px;
+      }
+
+      .bell {
+        position: relative;
+        width: 106px;
+        height: 106px;
+        border-radius: 100%;
+        background-color: #ac8f64;
+
+        &:after {
+          content: "order bell";
+          position: absolute;
+          top: 50%;
+          left: 80%;
+          transform: translateY(-50%);
+          white-space: nowrap;
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 400;
+        }
+      }
+
+      .count {
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 99%;
+        background: rgba(205, 65, 38, 0.8);
+      }
+    }
+  }
+}
+.cardWrap {
+  flex: 1;
+  padding: 140px 16px 0;
+  overflow-y: auto;
   .inner {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 56px;
+    gap: 52px;
+
+    .card {
+      padding: 10px;
+      box-sizing: border-box;
+      border-radius: 30px;
+      background: #fff;
+      box-shadow: 4px 4px 30px 0px rgba(0, 0, 0, 0.1), -4px -4px 10px 0px rgba(246, 246, 246, 0.5);
+    }
   }
 }

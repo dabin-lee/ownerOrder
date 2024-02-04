@@ -5,17 +5,12 @@ import moduleStyle from "./menu-index.module.scss";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const InputTextField = styled(TextField)({
-  "& label": {
-    color: "var(--sub-text)",
-  },
-});
 const MenuIndex = () => {
   const [category, setCategory] = useState<any>([]);
   const [card, setCard] = useState<any>([]);
   useEffect(() => {
     const getCategory = async () => {
-      const res = await axios.get<any>("https://dummyjson.com/products/categories");
+      const res = await axios.get<any>("https://fakestoreapi.com/products/categories");
       setCategory(res.data);
     };
 
@@ -24,34 +19,68 @@ const MenuIndex = () => {
 
   useEffect(() => {
     const getCardList = async () => {
-      const res = await axios.get("https://dummyjson.com/products");
-      console.log("res: ", res.data.products);
-      setCard(res.data.products);
+      const res = await axios.get("https://fakestoreapi.com/products");
+      setCard(res.data);
     };
 
     getCardList();
   }, [category]);
 
+  // const InputTextField = styled(TextField)({
+  //   backgroundColor: "#DADADA",
+  //   borderRadius: "30px",
+  //   width: "100%",
+  //   "& fieldset": {
+  //     border: "none",
+  //   },
+  //   "& placeholder": {
+  //     color: "red",
+  //   },
+  //   "& label": {
+  //     color: "var(--sub-text)",
+  //   },
+  // });
   return (
-    <div className={moduleStyle.main}>
-      <section>
+    <main className={moduleStyle.main}>
+      <section className={moduleStyle.menuSection}>
         <MenuLayout category={category}></MenuLayout>
       </section>
 
       <section className={moduleStyle.cardSection}>
         <div className={moduleStyle.searchWrap}>
-          <InputTextField />
-          <div>ORDER STATUS</div>
+          {/* <InputTextField /> */}
+
+          <TextField
+            fullWidth
+            placeholder="Browse your favourite coffee here.."
+            label="search menu"
+            id="search menu"
+            color="primary"
+            className={moduleStyle.textField}
+          />
+          <div className={moduleStyle.orderBell}>
+            <div className={moduleStyle.bellImage}>
+              <img src="src/assets/images/order_bell.svg" alt="" />
+            </div>
+
+            <div className={moduleStyle.bellText}>order bell</div>
+
+            {/* <div className={moduleStyle.bell}></div> */}
+            {/* <span>ORDER STATUS</span> */}
+            <div className={moduleStyle.count}>
+              <span>3</span>
+            </div>
+          </div>
         </div>
         <div className={moduleStyle.cardWrap}>
           <div className={moduleStyle.inner}>
-            {card.map((cd: any) => (
-              <MenuCard card={cd}></MenuCard>
+            {card?.map((product: any) => (
+              <MenuCard {...product} key={product.id}></MenuCard>
             ))}
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 

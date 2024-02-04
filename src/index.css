@@ -1,6 +1,14 @@
 /* global style */
-
+* {
+  box-sizing: border-box;
+}
 /* main */
 body {
-  overflow: hidden;
+  /* overflow: hidden; */
+  background-color: #f6f6f6;
+}
+
+:root {
+  --content-width: 1440px;
+  --side-width: 270px;
 }
