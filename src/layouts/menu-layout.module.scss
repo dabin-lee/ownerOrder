@@ -4,10 +4,47 @@
   margin: 0 auto;
 
   .inner {
-    height: 50%;
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px 10px;
     border-radius: 30px;
     background: #fff;
     box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.1), -4px -4px 10px 0px rgba(246, 246, 246, 0.5);
+
+    button {
+      background: none;
+      border: none;
+      &.arrowBtn {
+        width: 100%;
+      }
+    }
+
+    // ㅋㅏ테고리 리스트
+    .categories {
+      .category {
+        position: relative;
+        width: 100%;
+        button {
+          width: 100%;
+          padding: 10px;
+          span {
+            display: inline-block;
+            padding-top: 60%;
+          }
+        }
+        &::before {
+          content: "";
+          position: absolute;
+          top: 10px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 50%;
+          height: 50%;
+          border: 1px solid #eee;
+        }
+      }
+    }
   }
 }
