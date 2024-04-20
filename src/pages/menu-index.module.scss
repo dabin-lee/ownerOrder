@@ -12,7 +12,9 @@
 }
 
 .menuSection {
-  width: var(--side-width);
+  position: fixed;
+  left: 59px;
+  top: 59px;
   flex-shrink: 0;
 }
 
@@ -22,7 +24,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   flex: 1;
-  height: 100vh;
+  margin-left: var(--side-width);
 }
 
 // header search bar
@@ -33,15 +35,19 @@
   padding: 10px 16px;
   padding-top: 0;
   position: fixed;
+  z-index: 999;
+
   > div {
     &.textField {
       flex: 2;
+
       > div {
         padding: 28px;
         height: 83;
         box-sizing: border-box;
         border-radius: 30px;
         background: #dadada;
+
         input {
           padding: 0;
         }
@@ -120,10 +126,15 @@
     }
   }
 }
+
 .cardWrap {
   flex: 1;
+
+  width: calc(var(--content-width) - var(--side-width));
   padding: 140px 16px 0;
+  padding-right: 53px;
   overflow-y: auto;
+
   .inner {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

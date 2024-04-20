@@ -9,6 +9,6 @@ body {
 }
 
 :root {
-  --content-width: 1440px;
+  --content-width: 100vw;
   --side-width: 270px;
 }

@@ -1,17 +1,41 @@
-import { TextField, styled } from "@mui/material";
+import { Dialog, Slide, TextField } from "@mui/material";
+import { TransitionProps } from "@mui/material/transitions";
+import { useEffect, useState } from "react";
 import MenuCard from "../components/menu-card";
 import MenuLayout from "../layouts/menu.layout";
 import moduleStyle from "./menu-index.module.scss";
+import React from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import ProductDetail from "./products/product-detail";
+
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const MenuIndex = () => {
-  const [category, setCategory] = useState<any>([]);
+  const [categoryList, setCategoryList] = useState<any>([]);
   const [card, setCard] = useState<any>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState();
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   useEffect(() => {
     const getCategory = async () => {
       const res = await axios.get<any>("https://fakestoreapi.com/products/categories");
-      setCategory(res.data);
+      setCategoryList([...res.data, ...res.data, ...res.data]);
     };
 
     getCategory();
@@ -19,68 +43,75 @@ const MenuIndex = () => {
 
   useEffect(() => {
     const getCardList = async () => {
-      const res = await axios.get("https://fakestoreapi.com/products");
+      const res = await axios.get(`https://fakestoreapi.com/products/${selectedCategory ? `category/${selectedCategory}` : ""} `);
       setCard(res.data);
     };
 
     getCardList();
-  }, [category]);
+  }, [selectedCategory]);
 
-  // const InputTextField = styled(TextField)({
-  //   backgroundColor: "#DADADA",
-  //   borderRadius: "30px",
-  //   width: "100%",
-  //   "& fieldset": {
-  //     border: "none",
-  //   },
-  //   "& placeholder": {
-  //     color: "red",
-  //   },
-  //   "& label": {
-  //     color: "var(--sub-text)",
-  //   },
-  // });
+  // useEffect(() => {
+  //   const getProductItem = async () => {
+  //     const res = await axios.get(`https://fakestoreapi.com/products/${selectedProductId}`);
+  //     console.log(res.data);
+  //     setProductItem(res.data);
+  //   };
+
+  //   getProductItem();
+  // }, [selectedProductId]);
+
   return (
-    <main className={moduleStyle.main}>
-      <section className={moduleStyle.menuSection}>
-        <MenuLayout category={category}></MenuLayout>
-      </section>
+    <>
+      <main className={moduleStyle.main}>
+        <section className={moduleStyle.menuSection}>
+          <MenuLayout categoryList={categoryList} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}></MenuLayout>
+        </section>
+        <section className={moduleStyle.cardSection}>
+          <div className={moduleStyle.searchWrap}>
+            {/* <InputTextField /> */}
 
-      <section className={moduleStyle.cardSection}>
-        <div className={moduleStyle.searchWrap}>
-          {/* <InputTextField /> */}
+            <TextField
+              fullWidth
+              placeholder="Browse your favourite coffee here.."
+              label="search menu"
+              id="search menu"
+              color="primary"
+              className={moduleStyle.textField}
+            />
+            <div className={moduleStyle.orderBell}>
+              <div className={moduleStyle.bellImage}>
+                <img src="src/assets/images/order_bell.svg" alt="" />
+              </div>
 
-          <TextField
-            fullWidth
-            placeholder="Browse your favourite coffee here.."
-            label="search menu"
-            id="search menu"
-            color="primary"
-            className={moduleStyle.textField}
-          />
-          <div className={moduleStyle.orderBell}>
-            <div className={moduleStyle.bellImage}>
-              <img src="src/assets/images/order_bell.svg" alt="" />
-            </div>
+              <div className={moduleStyle.bellText}>order bell</div>
 
-            <div className={moduleStyle.bellText}>order bell</div>
-
-            {/* <div className={moduleStyle.bell}></div> */}
-            {/* <span>ORDER STATUS</span> */}
-            <div className={moduleStyle.count}>
-              <span>3</span>
+              {/* <div className={moduleStyle.bell}></div> */}
+              {/* <span>ORDER STATUS</span> */}
+              <div className={moduleStyle.count}>
+                <span>3</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div className={moduleStyle.cardWrap}>
-          <div className={moduleStyle.inner}>
-            {card?.map((product: any) => (
-              <MenuCard {...product} key={product.id}></MenuCard>
-            ))}
+          <div className={moduleStyle.cardWrap}>
+            <div className={moduleStyle.inner}>
+              {card?.map((product: any) => (
+                <MenuCard
+                  {...product}
+                  key={product.id}
+                  detailModalOpen={() => {
+                    setSelectedProductId(product.id);
+                    setOpen(true);
+                  }}
+                ></MenuCard>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+      <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+        <ProductDetail productId={selectedProductId} handleClose={handleClose}></ProductDetail>
+      </Dialog>
+    </>
   );
 };
 

@@ -7,13 +7,9 @@ import Typography from "@mui/material/Typography";
 import moduleStyle from "../pages/menu-index.module.scss";
 import { Product } from "../types";
 
-const showPopup = (item: any): any => {
-  console.log("item id: ", item);
-};
-
-const MenuCard = ({ category, description, id, image, price, rating, title }: Product) => {
+const MenuCard = ({ category, description, id, image, price, rating, title, detailModalOpen }: Product & { detailModalOpen: () => any }) => {
   return (
-    <Card sx={{ maxWidth: 345, height: "100%", boxShadow: "none" }} className={moduleStyle.card} onClick={() => showPopup(id)}>
+    <Card onClick={detailModalOpen} sx={{ maxWidth: 345, height: "100%", boxShadow: "none" }} className={moduleStyle.card}>
       <CardMedia sx={{ backgroundSize: "contain", height: 140, borderRadius: "20px" }} image={image} title="green iguana" />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">

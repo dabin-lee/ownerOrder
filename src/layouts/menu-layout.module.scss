@@ -1,9 +1,10 @@
 .categoryWrap {
   height: 100%;
   max-width: 159px;
-  margin: 0 auto;
 
   .inner {
+    position: sticky;
+    top: 57px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -16,34 +17,52 @@
     button {
       background: none;
       border: none;
+
       &.arrowBtn {
         width: 100%;
       }
     }
 
     // ㅋㅏ테고리 리스트
+    .categoryBox {
+      height: 400px;
+      padding: 0;
+      // overflow: auto;
+      overflow: hidden;
+    }
+
     .categories {
       .category {
         position: relative;
         width: 100%;
+        height: 100px;
+        padding: 10px;
+        box-sizing: border-box;
+
+        &.active {
+          background-color: red;
+        }
+
         button {
+          padding: 0;
           width: 100%;
-          padding: 10px;
+          height: 100%;
+
           span {
             display: inline-block;
-            padding-top: 60%;
           }
         }
-        &::before {
-          content: "";
-          position: absolute;
-          top: 10px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 50%;
-          height: 50%;
-          border: 1px solid #eee;
-        }
+
+        // &::before {
+        //   content: "";
+        //   position: absolute;
+        //   top: 10px;
+        //   left: 50%;
+        //   transform: translateX(-50%);
+        //   width: 50%;
+        //   height: 50%;
+        //   border: 1px solid #eee;
+        // }
       }
     }
   }
