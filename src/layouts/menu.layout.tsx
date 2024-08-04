@@ -1,8 +1,9 @@
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import SvgIcon from "@mui/material/SvgIcon";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import moduleStyle from "./menu-layout.module.scss";
+import {Categories} from '../types'
 
 const MenuLayout = (props: any) => {
   const scrollCategory = useRef<HTMLDivElement>(null)
@@ -22,7 +23,8 @@ const MenuLayout = (props: any) => {
     console.log('movePosition: ', movePosition);
     scrollCategory.current?.scrollTo({top: movePosition, left: 0, behavior: 'smooth'})
     console.log('scrollCategory?.current?.scrollTop: ', scrollCategory?.current?.scrollTop);
-  };
+
+    };
 
   return (
     <div className={moduleStyle.categoryWrap}>
@@ -32,13 +34,13 @@ const MenuLayout = (props: any) => {
           <SvgIcon component={KeyboardArrowUpIcon} inheritViewBox />
         </button>
 
-        {/* categories */}
         <div ref={scrollCategory} className={moduleStyle.categoryBox}>   
           <div className={moduleStyle.categories} >
-            {props.categoryList.map((item: string, index: number) => (
+            {props.categoryList.map((item: any, index: number) => (
               <div className={`${moduleStyle.category} ${props.selectedCategory == item ? moduleStyle.active : ''}`} key={index} >
-                <button type="button" onClick={() => props.setSelectedCategory(item)}>
-                  <span>{item}</span>
+                <button type="button" onClick={() => props.setSelectedCategory(item.title)}>
+                  <img src={item.url} alt="" />
+                  <span>{item.name}</span>    
                 </button>
               </div>
             ))}

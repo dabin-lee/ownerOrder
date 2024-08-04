@@ -8,6 +8,13 @@ import React from "react";
 import axios from "axios";
 import ProductDetail from "./products/product-detail";
 
+const sideDataList =[
+  {name: 'electronics', title: 'electronics', url :'/src/assets/icon/categories/electronics.svg'},
+  {name: 'jewelery', title: 'jewelery', url :'/src/assets/icon/categories/jewelery.svg'},
+  {name: 'men', title: `men's clothing`, url :'/src/assets/icon/categories/womensClothing.svg'},
+  {name: 'women', title: `women's clothing`, url :'/src/assets/icon/categories/mensClothing.svg'},
+]
+
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement;
@@ -35,7 +42,8 @@ const MenuIndex = () => {
   useEffect(() => {
     const getCategory = async () => {
       const res = await axios.get<any>("https://fakestoreapi.com/products/categories");
-      setCategoryList([...res.data, ...res.data, ...res.data]);
+      const categoryList = res.data.map((categoryName: string) => sideDataList.find(sideData => sideData.title === categoryName))
+      setCategoryList(categoryList);
     };
 
     getCategory();

@@ -66,7 +66,7 @@ const ProductDetail = ({ productId, handleClose }: any | Product) => {
   return (
     <>
       <div className={moduleStyle.detailWrap}>
-        <div className={moduleStyle.backBtn}>
+          <div className={moduleStyle.backBtn}>
           <button type="button" onClick={handleClose}>
             <span>BACK TO MENU</span>
           </button>

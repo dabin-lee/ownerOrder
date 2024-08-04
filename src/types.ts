@@ -12,3 +12,10 @@ type Rating = {
   rate: number;
   count: number;
 };
+
+export type Categories = {
+  name: string,
+  title: string,
+  image: string,
+  url: string
+}

@@ -12,10 +12,10 @@ const MenuCard = ({ category, description, id, image, price, rating, title, deta
     <Card onClick={detailModalOpen} sx={{ maxWidth: 345, height: "100%", boxShadow: "none" }} className={moduleStyle.card}>
       <CardMedia sx={{ backgroundSize: "contain", height: 140, borderRadius: "20px" }} image={image} title="green iguana" />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h5" component="div" className={moduleStyle.cardName}>
           {title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.secondary" className={moduleStyle.cardCont}>
           {description}
         </Typography>
       </CardContent>
